@@ -1,4 +1,5 @@
-(ns baking-soda.reactstrap)
+(ns baking-soda.reactstrap
+  (:require [clojure.string :as str]))
 
 
 (def reactstrap-tags
@@ -90,10 +91,20 @@
     UncontrolledTooltip
     ])
 
+(defn camel->kebab
+  "Converts CamelCase / camelCase to kebab-case"
+  [tag]
+  (->> tag
+       name
+       (re-seq #"\w[a-z]+")
+       (map str/lower-case)
+       (str/join "-")
+       symbol))
 
 (defn create-reactstrap-component [tag]
-  `(def ~tag (reagent.core/adapt-react-class
-              (aget js/Reactstrap ~(name tag)))))
+  `(def ~(camel->kebab tag)
+     (reagent.core/adapt-react-class
+      (aget js/Reactstrap ~(name tag)))))
 
 
 (defmacro export-reactstrap-components []
