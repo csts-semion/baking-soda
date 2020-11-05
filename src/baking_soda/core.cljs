@@ -1,11 +1,11 @@
 (ns baking-soda.core
   (:require
-   [reactstrap]
+   [cljsjs.reactstrap]
    [reagent.core :as r]))
 
 (defn adapt [tag]
   (r/adapt-react-class
-   (aget reactstrap tag)))
+   (aget js/Reactstrap tag)))
 
 (def alert (adapt "Alert"))
 (def badge (adapt "Badge"))
